@@ -1,4 +1,3 @@
-const Admin = require("../../../models/User/Admin");
 
 const Logout = async (req, res) => {
   try {

@@ -23,3 +23,5 @@ const Login = async (req, res) => {
     res.status(500).json({ errMessage });
   }
 };
+
+module.exports = Login;
