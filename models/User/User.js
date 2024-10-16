@@ -5,18 +5,22 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
+      trim: true,
     },
     password: {
       type: String,
       required: true,
+      trim: true,
     },
     gender: {
       type: String,
       required: true,
+      trim: true,
     },
     age: {
       type: Number,
@@ -24,6 +28,7 @@ const userSchema = new mongoose.Schema(
     },
     location: {
       type: String,
+      trim: true,
     },
   },
   { timestamps: true }
