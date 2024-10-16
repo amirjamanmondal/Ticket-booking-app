@@ -6,11 +6,21 @@ const cors = require("cors");
 
 const mongoose = require("mongoose");
 
+const cookieParser = require("cookie-parser");
+
+const producerRouter = require("./routes/producer/auth.Producer");
+
 const app = express();
 
 app.use(cors());
 
 dotenv.config();
+
+app.use(cookieParser());
+
+app.use(express.json());
+
+app.use("/producer", producerRouter);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Hello from server side." });
@@ -23,4 +33,4 @@ app.listen(PORT, () => console.log("server is runnig on port 8000"));
 mongoose
   .connect(process.env.DATABASE)
   .then(() => console.log("Database is connected."))
-  .catch((error)=>console.log(error.message))
+  .catch((error) => console.log(error.message));

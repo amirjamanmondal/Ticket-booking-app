@@ -11,8 +11,10 @@ const Signup = async (req, res) => {
       return res.status(401).json({ message: "user already exist" });
     }
 
-    const saltRound = bcrypt.genSalt(10);
-    const hashed = bcrypt.hash(password, saltRound);
+    const saltRound = await bcrypt.genSalt(10);
+    const hashed = await bcrypt.hash(password, saltRound);
+
+    console.log(hashed);
 
     const newUser = new Producer({
       name: name,
@@ -30,6 +32,8 @@ const Signup = async (req, res) => {
     res.status(201).json({ message: "Signup successfully" });
   } catch (error) {
     const message = error.message;
+    console.log({ error });
+
     res.status(500).json({ message });
   }
 };
