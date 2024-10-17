@@ -1,20 +1,20 @@
 const bcrypt = require("bcrypt");
-const Admin = require("../../../models/User/Admin");
+const User = require("../../../models/User/User");
 
 const Signup = async (req, res) => {
   try {
     const { name, email, password, gender, age } = req.body;
 
-    const find = await Admin.findOne({ email });
+    const find = await User.findOne({ email });
 
     if (find) {
       return res.status(401).json({ message: "user already exist" });
     }
 
-    const saltRound = bcrypt.genSalt(10);
-    const hashed = bcrypt.hash(password, saltRound);
+    const saltRound = await bcrypt.genSalt(10);
+    const hashed = await bcrypt.hash(password, saltRound);
 
-    const newUser = new Admin({
+    const newUser = new User({
       name: name,
       email: email,
       password: hashed,
@@ -22,11 +22,8 @@ const Signup = async (req, res) => {
       age: age,
     });
 
-    if (newUser) {
-      await newUser.save();
-    } else {
-      return res.status(400).json({ message: "user data invalid" });
-    }
+    await newUser.save();
+
     res.status(201).json({ message: "Signup successfully" });
   } catch (error) {
     const message = error.message;

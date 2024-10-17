@@ -8,7 +8,9 @@ const mongoose = require("mongoose");
 
 const cookieParser = require("cookie-parser");
 
-const producerRouter = require("./routes/producer/auth.Producer");
+const producerRouter = require("./routes/producer/authRoute.Producer");
+
+const userRouter = require('./routes/user/authRoute.User')
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/producer", producerRouter);
+app.use('/user', userRouter)
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Hello from server side." });
