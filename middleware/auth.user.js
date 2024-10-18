@@ -9,7 +9,7 @@ const UserAuth = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const userId = decoded.userId;
-    const user = await User.findById({ _id: userId });
+    const user = await User.findById({ _id: userId }).select("-password");
 
     req.user = user;
 
