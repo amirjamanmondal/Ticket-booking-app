@@ -5,11 +5,8 @@ const generateTokenSetCookie = async (userId, res) => {
     expiresIn: "10d",
   });
 
-  const timestamp = Date.now();
-  const randomPart = Math.floor(Math.random() * 1000000);
-  const coockieName = `${timestamp}-${randomPart}`;
 
-  res.cookie(`${coockieName}`, token, {
+  res.cookie('jwt', token, {
     maxAge: 10 * 24 * 60 * 60 * 1000,
     httpOnly: true,
     sameSite: "strict",

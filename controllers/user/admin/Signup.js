@@ -11,8 +11,8 @@ const Signup = async(req, res) => {
             return res.status(401).json({message: 'user already exist'})
         }
 
-        const saltRound = bcrypt.genSalt(10);
-        const hashed = bcrypt.hash(password,saltRound);
+        const saltRound = await bcrypt.genSalt(10);
+        const hashed = await bcrypt.hash(password,saltRound);
 
         const newUser = new Admin({name: name, email:email, password:hashed})
 

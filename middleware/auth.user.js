@@ -3,7 +3,7 @@ const User = require("../models/User/User");
 
 const UserAuth = async (req, res, next) => {
   try {
-    const token = req.cookies.login;
+    const token = req.cookies.jwt;
     if (!token) {
       return res.status(401).json("Unauthorized access!");
     }

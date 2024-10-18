@@ -1,6 +1,12 @@
 const mongoose = require('mongoose')
 
 const ticketSchema = new mongoose.Schema({
+    tickeNumber:{
+        type: String,
+        required: true,
+        trim: true,
+
+    },
     consumer: {
         name: {
             type: String,
