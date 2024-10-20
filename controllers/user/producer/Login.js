@@ -18,6 +18,7 @@ const Login = async (req, res) => {
     } else {
       return res.status(404).json({ message: "user data not found" });
     }
+    find.password = undefined;
     res.status(200).json({ message: "user Login sucessfully", find });
   } catch (error) {
     const errMessage = error.message;
