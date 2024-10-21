@@ -1,13 +1,22 @@
 const Ticket = require("../../models/Ticket/Ticket");
-
+const Movie = require("../../models/movie/Movie");
 const BookTicket = async (req, res) => {
   try {
     const user = req.user;
-    const { seatNo, screenType, catergory, price } = req.body;
+    const id = req.params.id;
 
-    if (!user) {
-      return res.status.json("user not found and unauthorized");
+    const { seatNo, screenType, catergory } = req.body;
+
+    const movie = await Movie.find({ _id: id }).select(
+      "name genre ticket release"
+    );
+    if (!movie) {
+      return res.status(200).json("content not found");
     }
+
+    const data = movie;
+
+    console.log(data.name);
 
     const alphaNumeric = generateAlphanumericString(15);
 
@@ -22,14 +31,14 @@ const BookTicket = async (req, res) => {
         location: "Delhi metrocity",
       },
       movie: {
-        name: "Sholey",
-        genre: "action/drama",
-        screenTime: 120,
+        name: movie.name,
+        genre: movie.genre,
+        screenTime: movie.release.toString(),
       },
       seatNo: seatNo,
       screenType: screenType,
       category: catergory,
-      price: price,
+      price: movie.ticket,
     });
 
     if (!ticket) {
@@ -40,8 +49,7 @@ const BookTicket = async (req, res) => {
 
     res.status(200).json({ ticket });
   } catch (error) {
-    const errMessage = error.meassage;
-    res.status(500).json(errMessage);
+    res.status(500).json(error);
     console.log(error);
   }
 };
