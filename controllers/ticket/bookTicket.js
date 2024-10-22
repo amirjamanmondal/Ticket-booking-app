@@ -14,10 +14,6 @@ const BookTicket = async (req, res) => {
       return res.status(200).json("content not found");
     }
 
-    const data = movie;
-
-    console.log(data.name);
-
     const alphaNumeric = generateAlphanumericString(15);
 
     const ticket = new Ticket({
@@ -33,7 +29,7 @@ const BookTicket = async (req, res) => {
       movie: {
         name: movie.name,
         genre: movie.genre,
-        screenTime: movie.release.toString(),
+        screenTime: movie.release,
       },
       seatNo: seatNo,
       screenType: screenType,
