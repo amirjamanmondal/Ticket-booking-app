@@ -2,11 +2,10 @@ const Movie = require("../../models/movie/Movie");
 
 const DeleteMovie = async (req, res) => {
   try {
-    const user = req.user;
     const id = req.pararms.id;
 
     if (!id) {
-      return res.status(401).json({ message: "id not provided" });
+      return res.status(400).json({ message: "id not provided" });
     }
 
     const movie = await Movie.findByIdAndDelete({ _id: id }).select("name");

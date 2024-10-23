@@ -6,14 +6,15 @@ const GetInfo = require("../../controllers/user/user/Getinfo");
 const UserAuth = require("../../middleware/auth.user");
 const BookTicket = require("../../controllers/ticket/bookTicket");
 const CancelTicket = require("../../controllers/ticket/cancelTicket");
+const AddTheater = require("../../controllers/theater/addTheater");
 
 const userRouter = express.Router();
-
 userRouter.post("/signup", Signup);
 userRouter.post("/login", Login);
 userRouter.get("/", UserAuth, GetInfo);
 userRouter.post("/logout", UserAuth, Logout);
 userRouter.post("/book/:id", UserAuth, BookTicket);
 userRouter.post("/cancelticket/:id", UserAuth, CancelTicket);
+userRouter.post("/theater", UserAuth, AddTheater);
 
 module.exports = userRouter;

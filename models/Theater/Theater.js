@@ -1,31 +1,50 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const theaterSchema = new mongoose.Schema({
-    name:{
-        type: String,
-        required: true,
+const theaterSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    place:{
-        type: String,
-        required: true,
+    place: {
+      type: Array,
+      required: true,
+      trim: true,
     },
-    location:{
-        type: String,
-        required: true,
+    screen: {
+      type: String,
+      required: true,
+      trim: true,
     },
-    screen:{
-        type: String,
-        required: true,
+    availability: {
+      type: Boolean,
+      required: true,
+      default: true,
     },
-    availability:{
-        type: Boolean,
-        required: true,
+    services: {
+      type: String,
+      trim: true,
     },
-    services:{
-        type: String,
+    theaterId: {
+      type: String,
+      required: true,
+      trim: true,
     },
-}, {timestamps: true})
+    verification: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    status: {
+      type: Boolean,
+      require: true,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
 
-const Theater = mongoose.model('theater', theaterSchema)
+const Theater = mongoose.model("theater", theaterSchema);
 
 module.exports = Theater;
