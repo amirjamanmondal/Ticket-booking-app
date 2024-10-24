@@ -8,7 +8,7 @@ const Signup = async (req, res) => {
     const find = await Producer.findOne({ email });
 
     if (find) {
-      return res.status(401).json({ message: "user already exist" });
+      return res.status(409).json({ message: "user already exist" });
     }
 
     const saltRound = await bcrypt.genSalt(10);

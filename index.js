@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 
 const cookieParser = require("cookie-parser");
 
-const adminRouter = require('./routes/admin/authRoute.Admin')
 
 const producerRouter = require("./routes/producer/authRoute.Producer");
 
@@ -24,7 +23,6 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-app.use('/admin', adminRouter)
 app.use("/producer", producerRouter);
 app.use("/user", userRouter);
 
