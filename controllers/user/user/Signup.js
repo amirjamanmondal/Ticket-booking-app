@@ -1,9 +1,20 @@
 const bcrypt = require("bcrypt");
 const User = require("../../../models/User/User");
+const userSchema = require("../../../validator/userValidator");
 
 const Signup = async (req, res) => {
   try {
-    const { name, email, password, gender, age } = req.body;
+    const validatedData = userSchema.parse(req.body);
+
+    if (
+      !validatedData.name ||
+      !validatedData.email ||
+      !validatedData.password
+    ) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const { name, email, password, gender, age } = validatedData;
 
     const find = await User.findOne({ email });
 
@@ -26,8 +37,10 @@ const Signup = async (req, res) => {
 
     res.status(201).json({ message: "Signup successfully" });
   } catch (error) {
-    const message = error.message;
-    res.status(500).json({ message });
+    const message = error;
+    console.log(message);
+
+    res.status(500).json( message);
   }
 };
 

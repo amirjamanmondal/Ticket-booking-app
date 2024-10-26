@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Hello from server side." });
 });
 
-const PORT = 8000;
+const PORT = process.env.PORT || 4004;
 
 app.listen(PORT, () => console.log("server is runnig on port 8000"));
 
