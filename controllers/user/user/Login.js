@@ -1,10 +1,20 @@
 const bcrypt = require("bcrypt");
 const User = require("../../../models/User/User");
 const generateTokenSetCookie = require("../../../utils/generateTokenSetCookie");
+const validateUser = require("../../../validator/userValidator");
+const z = require("zod");
+const handleZodError = require("../../../utils/ZodErrorHandler");
 
 const Login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const validatedData = validateUser(req.body, false);
+
+    if (!validatedData.email || !validatedData.password) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const { email, password } = validatedData;
+    console.log(validatedData);
 
     const find = await User.findOne({ email: email }).select("-password");
 
@@ -21,8 +31,13 @@ const Login = async (req, res) => {
     }
     res.status(200).json({ message: "user Login sucessfully", find });
   } catch (error) {
-    const errMessage = error.message;
-    res.status(500).json({ errMessage });
+    if (error instanceof z.ZodError) {
+      const customError = handleZodError(error);
+      return res.status(400).json(customError);
+    } else {
+      // Handle other errors
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 };
 

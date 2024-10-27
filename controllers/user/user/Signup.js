@@ -1,11 +1,12 @@
 const bcrypt = require("bcrypt");
 const User = require("../../../models/User/User");
-const userSchema = require("../../../validator/userValidator");
+const validateUser = require("../../../validator/userValidator");
+const z = require("zod");
+const handleZodError = require('../../../utils/ZodErrorHandler')
 
 const Signup = async (req, res) => {
   try {
-    const validatedData = userSchema.parse(req.body);
-
+    const validatedData = validateUser(req.body, true);
     if (
       !validatedData.name ||
       !validatedData.email ||
@@ -37,10 +38,13 @@ const Signup = async (req, res) => {
 
     res.status(201).json({ message: "Signup successfully" });
   } catch (error) {
-    const message = error;
-    console.log(message);
-
-    res.status(500).json( message);
+    if (error instanceof z.ZodError) {
+      const customError = handleZodError(error);
+      return res.status(400).json(customError);
+    } else {
+      // Handle other errors
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 };
 
