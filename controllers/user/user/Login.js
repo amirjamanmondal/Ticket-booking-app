@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../../../models/User/User");
 const generateTokenSetCookie = require("../../../utils/generateTokenSetCookie");
-const validateUser = require("../../../validator/userValidator");
+const { validateUser } = require("../../../validator/userValidator");
 const z = require("zod");
 const handleZodError = require("../../../utils/ZodErrorHandler");
 

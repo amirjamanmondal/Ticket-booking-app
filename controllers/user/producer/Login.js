@@ -1,10 +1,19 @@
 const bcrypt = require("bcrypt");
 const Producer = require("../../../models/User/Producer");
 const generateTokenSetCookie = require("../../../utils/generateTokenSetCookie");
+const { z } = require("zod");
+const {validateProducer} = require("../../../validator/userValidator");
+const handleZodError = require("../../../utils/ZodErrorHandler");
 
 const Login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const validatData = validateProducer(req.body, false);
+
+    const { email, password } = validatData;
+
+    if (!validatData.email || !validatData.password) {
+      return res.status(404).json({ message: " It can not be empty fields " });
+    }
 
     const find = await Producer.findOne({ email: email });
 
@@ -21,8 +30,13 @@ const Login = async (req, res) => {
     find.password = undefined;
     res.status(200).json({ message: "user Login sucessfully", find });
   } catch (error) {
-    const errMessage = error.message;
-    res.status(500).json({ errMessage });
+    if (error instanceof z.ZodError) {
+      const customError = handleZodError(error);
+      return res.status(400).json(customError);
+    } else {
+      // Handle other errors
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 };
 

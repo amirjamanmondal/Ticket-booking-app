@@ -1,9 +1,24 @@
 const bcrypt = require("bcrypt");
 const Producer = require("../../../models/User/Producer");
+const { z } = require("zod");
+const { validateProducer } = require("../../../validator/userValidator");
+const handleZodError = require("../../../utils/ZodErrorHandler");
 
 const Signup = async (req, res) => {
   try {
-    const { name, email, password, age, gender } = req.body;
+    const validateData = validateProducer(req.body, true);
+
+    if (
+      !validateData.name ||
+      !validateData.email ||
+      !validateData.password ||
+      !validateData.age ||
+      !validateData.gender
+    ) {
+      return res.status(404).json({ message: "Missing required fields " });
+    }
+
+    const { name, email, password, age, gender } = validateData;
 
     const find = await Producer.findOne({ email });
 
@@ -13,8 +28,6 @@ const Signup = async (req, res) => {
 
     const saltRound = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, saltRound);
-
-    console.log(hashed);
 
     const newUser = new Producer({
       name: name,
@@ -31,10 +44,14 @@ const Signup = async (req, res) => {
     }
     res.status(201).json({ message: "Signup successfully" });
   } catch (error) {
-    const message = error.message;
-    console.log({ error });
-
-    res.status(500).json({ message });
+    if (error instanceof z.ZodError) {
+      const customError = handleZodError(error);
+      return res.status(400).json(customError);
+    } else {
+      // Handle other errors
+      console.log(error.message);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 };
 
