@@ -2,12 +2,12 @@ const bcrypt = require("bcrypt");
 const Producer = require("../../../models/User/Producer");
 const generateTokenSetCookie = require("../../../utils/generateTokenSetCookie");
 const { z } = require("zod");
-const {validateProducer} = require("../../../validator/userValidator");
+const ProducerValidator = require("../../../validator/producerValidator");
 const handleZodError = require("../../../utils/ZodErrorHandler");
 
 const Login = async (req, res) => {
   try {
-    const validatData = validateProducer(req.body, false);
+    const validatData = ProducerValidator(req.body, false);
 
     const { email, password } = validatData;
 
@@ -35,7 +35,7 @@ const Login = async (req, res) => {
       return res.status(400).json(customError);
     } else {
       // Handle other errors
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json(error.message);
     }
   }
 };

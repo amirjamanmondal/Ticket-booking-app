@@ -14,7 +14,6 @@ const Login = async (req, res) => {
     }
 
     const { email, password } = validatedData;
-    console.log(validatedData);
 
     const find = await User.findOne({ email: email }).select("-password");
 

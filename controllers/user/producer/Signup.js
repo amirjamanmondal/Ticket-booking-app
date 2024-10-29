@@ -1,12 +1,12 @@
 const bcrypt = require("bcrypt");
 const Producer = require("../../../models/User/Producer");
 const { z } = require("zod");
-const { validateProducer } = require("../../../validator/userValidator");
+const ProducerValidator = require("../../../validator/producerValidator");
 const handleZodError = require("../../../utils/ZodErrorHandler");
 
 const Signup = async (req, res) => {
   try {
-    const validateData = validateProducer(req.body, true);
+    const validateData = ProducerValidator(req.body, true);
 
     if (
       !validateData.name ||

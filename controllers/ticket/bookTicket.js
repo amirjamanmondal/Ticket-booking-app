@@ -1,12 +1,13 @@
 const Ticket = require("../../models/Ticket/Ticket");
 const Movie = require("../../models/movie/Movie");
 const generateAlphanumericString = require("../../utils/generateRandomString");
+const TicketValidator = require('../../validator/TicketValidator')
 const BookTicket = async (req, res) => {
   try {
     const user = req.user;
     const id = req.params.id;
 
-    const { seatNo, screenType, catergory } = req.body;
+    const validatedData = TicketValidator(req.body);
 
     const movie = await Movie.find({ _id: id }).select(
       "name genre ticket release"
