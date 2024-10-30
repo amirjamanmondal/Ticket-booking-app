@@ -8,7 +8,7 @@ const SearchMovie = async (req, res) => {
       return res.status(400).json({ message: "failed to sync" });
     }
 
-    const movie = await Movie.findById({ _id: id }).select("name");
+    const movie = await Movie.findById({ _id: id });
     if (!movie) {
       return res
         .status(404)
