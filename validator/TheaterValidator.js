@@ -10,12 +10,12 @@ const TheaterValidator = z.object({
         return index === ctx.path[ctx.path.length - 1];
       },
       { message: "Duplicate name found" }
-    ),
-  place: z.array(z.string().trim()),
+    ).optional(),
+  place: z.string().trim().optional(),
   screen: z.string().trim(),
   availability: z.boolean().default("true"),
   services: z.string().trim().optional(),
-  theaterId: z.string().trim(),
+  theaterId: z.string().trim().optional(),
   verification: z.boolean().default(false),
   status: z.boolean().default(false),
 });

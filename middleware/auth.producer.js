@@ -10,8 +10,12 @@ const AuthRouteProducer = async (req, res, next) => {
     }
     const decoded = jwt.verify(token, process.env.SECRET_KEY);
     const userId = decoded.userId;
-    const user = await Producer.findById({ _id: userId }).select("-password");
 
+    const user = await Producer.findById({ _id: userId });
+
+    if (!user) {
+      return res.status(404).json({ message: "Unauthorised access No account found" });
+    }
     req.user = user;
     next();
   } catch (error) {

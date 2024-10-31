@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../../../models/User/User");
 const validateUser = require("../../../validator/userValidator");
 const z = require("zod");
-const handleZodError = require('../../../utils/ZodErrorHandler')
+const handleZodError = require('../../../Helpers/ZodErrorHandler')
 
 const Signup = async (req, res) => {
   try {

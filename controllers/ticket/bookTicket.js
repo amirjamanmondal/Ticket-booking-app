@@ -1,6 +1,6 @@
 const Ticket = require("../../models/Ticket/Ticket");
 const Movie = require("../../models/movie/Movie");
-const generateAlphanumericString = require("../../utils/generateRandomString");
+const generateAlphanumericString = require("../../Helpers/generateRandomString");
 const TicketValidator = require("../../validator/TicketValidator");
 const BookTicket = async (req, res) => {
   try {

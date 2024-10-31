@@ -8,7 +8,7 @@ const MovieValidator = z.object({
   cast: z.array(z.string().trim()),
   genre: z.string().trim(),
   duration: z.string().trim(),
-  release: z.date(),
+  release: z.string(),
   ticket: z.number(),
   streaming: z.array(z.string().trim()),
   origin: z.string().trim(),

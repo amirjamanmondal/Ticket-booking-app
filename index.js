@@ -26,9 +26,8 @@ app.use(express.json());
 app.use("/producer", producerRouter);
 app.use("/user", userRouter);
 
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "Hello from server side." });
-});
+
+
 
 const PORT = process.env.PORT || 4004;
 

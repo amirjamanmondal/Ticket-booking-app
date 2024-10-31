@@ -1,11 +1,14 @@
 const Theater = require("../../models/Theater/Theater");
-const generateAlphanumericString = require("../../utils/generateRandomString");
+const generateAlphanumericString = require("../../Helpers/generateRandomString");
+const TheaterValidator = require("../../validator/TheaterValidator");
 
 const AddTheater = async (req, res) => {
   try {
     const user = req.user;
 
-    const { screen, availability, services } = req.body;
+    const validator = TheaterValidator.parse(req.body);
+
+    const { place, screen, availability, services } = validator;
 
     if (!req.body) {
       return res.status(204).json({ message: "input not provided" });
@@ -20,7 +23,7 @@ const AddTheater = async (req, res) => {
 
       const theater = new Theater({
         name: user.name,
-        place: [user.location || req.body.place],
+        place: place,
         screen: screen,
         availability: availability,
         services: services,

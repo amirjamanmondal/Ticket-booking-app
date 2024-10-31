@@ -1,8 +1,12 @@
 const Movie = require("../../models/movie/Movie");
+const MovieValidator = require("../../validator/MovieValidator");
 
 const AddMovie = async (req, res) => {
   try {
     const user = req.user;
+
+    const validator = MovieValidator.parse(req.body);
+
     const {
       name,
       production,
@@ -15,7 +19,7 @@ const AddMovie = async (req, res) => {
       streaming,
       origin,
       budget,
-    } = req.body;
+    } = validator;
 
     const newMovie = new Movie({
       name: name,

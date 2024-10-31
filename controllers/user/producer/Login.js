@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 const Producer = require("../../../models/User/Producer");
-const generateTokenSetCookie = require("../../../utils/generateTokenSetCookie");
+const generateTokenSetCookie = require("../../../Helpers/generateTokenSetCookie");
 const { z } = require("zod");
 const ProducerValidator = require("../../../validator/producerValidator");
-const handleZodError = require("../../../utils/ZodErrorHandler");
+const handleZodError = require("../../../Helpers/ZodErrorHandler");
 
 const Login = async (req, res) => {
   try {

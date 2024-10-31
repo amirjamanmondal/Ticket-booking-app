@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { string } = require("zod");
 
 const theaterSchema = new mongoose.Schema(
   {
@@ -9,7 +10,7 @@ const theaterSchema = new mongoose.Schema(
       unique: true,
     },
     place: {
-      type: Array,
+      type: String,
       required: true,
       trim: true,
     },
