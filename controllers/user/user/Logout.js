@@ -1,6 +1,6 @@
 const Logout = async (req, res) => {
   try {
-    res.clearCookie("login");
+    res.clearCookie("jwt");
     res.status(200).json({ message: "Logged out Successfully" });
   } catch (error) {
     const errMessage = error.message;

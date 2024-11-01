@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../../../models/User/User");
 const generateTokenSetCookie = require("../../../Helpers/generateTokenSetCookie");
-const { validateUser } = require("../../../validator/userValidator");
+const validateUser = require("../../../validator/userValidator");
 const z = require("zod");
 const handleZodError = require("../../../Helpers/ZodErrorHandler");
 
@@ -35,7 +35,7 @@ const Login = async (req, res) => {
       return res.status(400).json(customError);
     } else {
       // Handle other errors
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json(error.message);
     }
   }
 };

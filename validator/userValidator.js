@@ -29,5 +29,4 @@ const validateUser = (data, isSignup) => {
   return userSchema.parse(data);
 };
 
-
-module.exports = { validateUser };
+module.exports = validateUser;

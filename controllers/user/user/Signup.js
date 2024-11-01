@@ -43,7 +43,7 @@ const Signup = async (req, res) => {
       return res.status(400).json(customError);
     } else {
       // Handle other errors
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json(error.message);
     }
   }
 };
