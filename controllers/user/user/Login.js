@@ -25,6 +25,7 @@ const Login = async (req, res) => {
 
     if (find || (await bcrypt.compare(password, find?.password || " "))) {
       generateTokenSetCookie({ userId }, res);
+      req.session.userId = userId;
     } else {
       return res.status(404).json({ message: "user data not found" });
     }

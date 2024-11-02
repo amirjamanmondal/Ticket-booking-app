@@ -4,7 +4,9 @@ const Producer = require("../models/User/Producer");
 const AuthRouteProducer = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
-
+    const valUser = req.cookies;
+    console.log(valUser);
+    
     if (!token) {
       return res.status(401).json({ message: "Unauthorized access!" });
     }
