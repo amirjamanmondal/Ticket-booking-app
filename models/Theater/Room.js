@@ -9,7 +9,7 @@ const roomSchema = new mongoose.Schema(
       trim: true,
     },
     placement: {
-      type: string,
+      type: String,
       require: true,
       trim: true,
     },
@@ -22,6 +22,5 @@ const roomSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-const Room= mongoose.model('room', roomSchema);
-module.exports= Room;
+const Room = mongoose.model("room", roomSchema);
+module.exports = Room;

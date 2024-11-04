@@ -1,6 +1,7 @@
 const Theater = require("../../models/Theater/Theater");
 const generateAlphanumericString = require("../../Helpers/generateRandomString");
 const TheaterValidator = require("../../validator/TheaterValidator");
+const Room = require('../../models/Theater/Room');
 
 const AddTheater = async (req, res) => {
   try {
